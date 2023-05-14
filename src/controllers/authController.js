@@ -1,14 +1,13 @@
 import dotenv from "dotenv";
 import jwt from "jsonwebtoken";
 
-import { getClients } from "../services/clientService.js";
+import { findUserByAttribute } from "../repository/clientRepository.js";
 dotenv.config();
 
 export const getToken = async (req, res) => {
   try {
     const { email } = req.params;
-    const clients = await getClients();
-    const currClient = clients.find((client) => client.email === email);
+    const currClient = await findUserByAttribute("email", email);
 
     if (!currClient) return res.json({ ok: false });
 
