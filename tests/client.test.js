@@ -36,3 +36,38 @@ describe("GET /client/:id", () => {
     expect(res.body).toEqual({ message: "Not found" });
   });
 });
+
+describe("GET /client/username/:username", () => {
+  it("should not get a client when it does not have access", async () => {
+    const res = await request(app).get("/client/username/does-not-have-access");
+    expect(res.statusCode).toEqual(401);
+    expect(res.body).toEqual({ message: "Not allowed" });
+  });
+
+  let auth = {};
+  beforeAll(async () => await getUserToken(auth));
+
+  it("should get a client by username", async () => {
+    const testUsername = "Britney";
+    const res = await request(app)
+      .get(`/client/username/${testUsername}`)
+      .set("Authorization", "bearer " + auth.token);
+    expect(res.statusCode).toEqual(200);
+    expect(res.body).toEqual(
+      expect.objectContaining({
+        id: expect.any(String),
+        name: testUsername,
+        email: expect.any(String),
+        role: expect.any(String),
+      })
+    );
+  });
+
+  it("should not get a client for username does not exist", async () => {
+    const res = await request(app)
+      .get("/client/username/username-does-not-exist")
+      .set("Authorization", "bearer " + auth.token);
+    expect(res.statusCode).toEqual(404);
+    expect(res.body).toEqual({ message: "Not found" });
+  });
+});

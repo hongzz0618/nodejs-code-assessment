@@ -1,6 +1,9 @@
 import { Router } from "express";
 
-import { getClientById } from "../controllers/clientController.js";
+import {
+  getClientById,
+  getClientByUsername,
+} from "../controllers/clientController.js";
 import {
   authenticateToken,
   authUserRole,
@@ -14,6 +17,13 @@ router.get(
   authenticateToken,
   authUserRole(ROLES_LIST.UserAdmin),
   getClientById
+);
+
+router.get(
+  "/username/:username",
+  authenticateToken,
+  authUserRole(ROLES_LIST.UserAdmin),
+  getClientByUsername
 );
 
 export default router;
