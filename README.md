@@ -1,5 +1,6 @@
 # nodejs-code-assessment
 
+![backend_test](./backend_test.png)
 ## Installation
 
 ```
