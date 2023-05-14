@@ -6,9 +6,7 @@ export const getClientById = async (req, res) => {
     const clients = await getClients();
     const currClient = clients.find((client) => client.id === id);
 
-    if (!currClient) {
-      return res.status(404).json({ message: "Not found" });
-    }
+    if (!currClient) return res.status(404).json({ message: "Not found" });
 
     res.json(currClient);
   } catch (error) {
