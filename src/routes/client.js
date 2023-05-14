@@ -3,6 +3,7 @@ import { Router } from "express";
 import {
   getClientById,
   getClientByUsername,
+  getClientByPolicyId,
 } from "../controllers/clientController.js";
 import {
   authenticateToken,
@@ -24,6 +25,13 @@ router.get(
   authenticateToken,
   authUserRole(ROLES_LIST.UserAdmin),
   getClientByUsername
+);
+
+router.get(
+  "/policy/:id",
+  authenticateToken,
+  authUserRole(ROLES_LIST.Admin),
+  getClientByPolicyId
 );
 
 export default router;

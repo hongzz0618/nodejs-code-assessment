@@ -9,10 +9,11 @@ describe("GET /isuser/:email", () => {
   });
 });
 
-export const getUserToken = async (auth) => {
-  const res = await request(app).get(
-    "/isuser/britneyblankenship@quotezart.com"
-  );
+export const getUserToken = async (
+  auth,
+  testEmail = "britneyblankenship@quotezart.com"
+) => {
+  const res = await request(app).get(`/isuser/${testEmail}`);
   expect(res.statusCode).toEqual(200);
   expect(res.body.ok).toEqual(true);
   auth.token = res.body.accessToken;

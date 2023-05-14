@@ -11,9 +11,9 @@ describe("GET /policy/username/:username", () => {
 
   let auth = {};
   beforeAll(async () => await getUserToken(auth));
+  const testUsername = "britney";
 
   it("should get a policy by username", async () => {
-    const testUsername = "britney";
     const res = await request(app)
       .get(`/policy/username/${testUsername}`)
       .set("Authorization", "bearer " + auth.token);
@@ -38,5 +38,15 @@ describe("GET /policy/username/:username", () => {
       .set("Authorization", "bearer " + auth.token);
     expect(res.statusCode).toEqual(404);
     expect(res.body).toEqual({ message: "Not found" });
+  });
+
+  it("should not get policies for users of user permissions", async () => {
+    let currAuth = {};
+    await getUserToken(currAuth, "merrillblankenship@quotezart.com");
+    const res = await request(app)
+      .get(`/policy/username/${testUsername}`)
+      .set("Authorization", "bearer " + currAuth.token);
+    expect(res.statusCode).toEqual(401);
+    expect(res.body).toEqual({ message: "Not allowed" });
   });
 });

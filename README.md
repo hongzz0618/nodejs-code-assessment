@@ -26,11 +26,9 @@ $ npm test
 
 The REST API application is described below.
 
+## Auth
+
 ### Get user jwt (expires in 30 seconds)
-
-#### Token that does not expire for testing purposes
-
-    eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJyb2xlIjoiYWRtaW4iLCJpYXQiOjE2ODQwNTI4Njh9.x7h0_X8yi2GZ7unmSEmoQnEg_kX0jnTi3JY9ubf4ij4
 
 #### Request
 
@@ -51,7 +49,13 @@ The REST API application is described below.
 
     {"ok":true,"accessToken":"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJyb2xlIjoiYWRtaW4iLCJpYXQiOjE2ODQwNTcyMzQsImV4cCI6MTY4NDA1NzI2NH0.Dj5qjo-a3to88YpVfOCKefZsjAykUXxGh72cmH9kYts"}
 
-### Get user data filtered by user id
+#### Token that does not expire for testing purposes
+
+    eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJyb2xlIjoiYWRtaW4iLCJpYXQiOjE2ODQwNTI4Njh9.x7h0_X8yi2GZ7unmSEmoQnEg_kX0jnTi3JY9ubf4ij4
+
+## Client
+
+### Get user data filtered by user id (user, admin)
 
 #### Request
 
@@ -72,7 +76,7 @@ The REST API application is described below.
 
     {"id":"a0ece5db-cd14-4f21-812f-966633e7be86","name":"Britney","email":"britneyblankenship@quotezart.com","role":"admin"}
 
-### Get user data filtered by user name
+### Get user data filtered by user name (user, admin)
 
 #### Request
 
@@ -93,7 +97,30 @@ The REST API application is described below.
 
     {"id":"a0ece5db-cd14-4f21-812f-966633e7be86","name":"Britney","email":"britneyblankenship@quotezart.com","role":"admin"}
 
-### Get the list of policies linked to a user name
+### Get the user linked to a policy number (admin)
+
+#### Request
+
+`GET /client/policy/:id`
+
+    curl -i -H 'Accept: application/json' -H "Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJyb2xlIjoiYWRtaW4iLCJpYXQiOjE2ODQwNTcyMzQsImV4cCI6MTY4NDA1NzI2NH0.Dj5qjo-a3to88YpVfOCKefZsjAykUXxGh72cmH9kYts" http://localhost:3000/client/policy/64cceef9-3a01-49ae-a23b-3761b604800b
+
+#### Response
+
+    HTTP/1.1 200 OK
+    X-Powered-By: Express
+    Content-Type: application/json; charset=utf-8
+    Content-Length: 120
+    ETag: W/"78-fKYCgA4K0/SH8tSJYH/zgLlv0aY"
+    Date: Sun, 14 May 2023 12:15:25 GMT
+    Connection: keep-alive
+    Keep-Alive: timeout=5
+
+    {"id":"e8fd159b-57c4-4d36-9bd7-a59ca13057bb","name":"Manning","email":"manningblankenship@quotezart.com","role":"admin"}
+
+## Policy
+
+### Get the list of policies linked to a user name (admin)
 
 #### Request
 
