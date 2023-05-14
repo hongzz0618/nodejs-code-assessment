@@ -6,7 +6,7 @@ export const getPolicies = async () => {
       //default value of the exercise policy api
       "http://www.mocky.io/v2/580891a4100000e8242b75c5"
     );
-    return response.data;
+    return response.data.policies;
   } catch (error) {
     console.error(error);
   }

@@ -27,7 +27,9 @@ $ npm test
 The REST API application is described below.
 
 ### Get user jwt (expires in 30 seconds)
+
 #### Token that does not expire for testing purposes
+
     eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJyb2xlIjoiYWRtaW4iLCJpYXQiOjE2ODQwNTI4Njh9.x7h0_X8yi2GZ7unmSEmoQnEg_kX0jnTi3JY9ubf4ij4
 
 #### Request
@@ -49,7 +51,7 @@ The REST API application is described below.
 
     {"ok":true,"accessToken":"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJyb2xlIjoiYWRtaW4iLCJpYXQiOjE2ODQwNTcyMzQsImV4cCI6MTY4NDA1NzI2NH0.Dj5qjo-a3to88YpVfOCKefZsjAykUXxGh72cmH9kYts"}
 
-### Get client by user id
+### Get user data filtered by user id
 
 #### Request
 
@@ -70,7 +72,7 @@ The REST API application is described below.
 
     {"id":"a0ece5db-cd14-4f21-812f-966633e7be86","name":"Britney","email":"britneyblankenship@quotezart.com","role":"admin"}
 
-### Get client by user name
+### Get user data filtered by user name
 
 #### Request
 
@@ -90,3 +92,26 @@ The REST API application is described below.
     Keep-Alive: timeout=5
 
     {"id":"a0ece5db-cd14-4f21-812f-966633e7be86","name":"Britney","email":"britneyblankenship@quotezart.com","role":"admin"}
+
+### Get the list of policies linked to a user name
+
+#### Request
+
+`GET /policy/username/:username`
+
+    curl -i -H 'Accept: application/json' -H "Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJyb2xlIjoiYWRtaW4iLCJpYXQiOjE2ODQwNTcyMzQsImV4cCI6MTY4NDA1NzI2NH0.Dj5qjo-a3to88YpVfOCKefZsjAykUXxGh72cmH9kYts" http://localhost:3000/policy/username/britney
+
+#### Response
+
+    HTTP/1.1 200 OK
+    X-Powered-By: Express
+    Content-Type: application/json; charset=utf-8
+    Content-Length: 22965
+    ETag: W/"59b5-bhcqvQ8sH6vbSXvblrXi52VLMKA"
+    Date: Sun, 14 May 2023 11:21:08 GMT
+    Connection: keep-alive
+    Keep-Alive: timeout=5
+
+    [{"id":"7b624ed3-00d5-4c1b-9ab8-c265067ef58b","amountInsured":399.89,"email":"inesblankenship@quotezart.com","inceptionDate":"2015-07-06T06:55:49Z","installmentPayment":true,"clientId":"a0ece5db-cd14-4f21-812f-966633e7be86"},{"id":"6f514ec4-1726-4628-974d-20afe4da130c","amountInsured":697.04,"email":"inesblankenship@quotezart.com","inceptionDate":"2014-09-12T12:10:23Z","installmentPayment":false,"clientId":"a0ece5db-cd14-4f21-812f-966633e7be86"},{"id":"25202f31-fff0-481c-acfd-1f3ff2a9bcbe","amountInsured":2579.16,"email":"inesblankenship@quotezart.com","inceptionDate":"2016-05-03T04:58:48Z","installmentPayment":false,"clientId":"a0ece5db-cd14-4f21-812f-966633e7be86"},{"id":"15b4430d-96f8-468e-98c0-3caaf8b0b3b6","amountInsured":645.65,"email":"inesblankenship@quotezart.com","inceptionDate":"2016-01-15T02:56:48Z","installmentPayment":true,"clientId":"a0ece5db-cd14-4f21-812f-966633e7be86"},{"id":"0df3bcef-7a14-4dd7-a42d-fa209d0d5804","amountInsured":705.14,"email":"inesblankenship@quotezart.com","inceptionDate":"2014-05-11T12:28:41Z","installmentPayment":false,"clientId":"a0ece5db-cd14-4f21-812f-966633e7be86"}
+    ...
+    ]
